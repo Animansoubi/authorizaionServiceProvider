@@ -1,0 +1,17 @@
+{
+  "name": "authorizationserviceprovider",
+  "version": "0.0.0",
+
+  "dependencies": {
+    "body-parser": "latest",
+    "cookie-parser": "latest",
+    "express": "latest",
+    "jade": "latest",
+    "morgan": "latest",
+    "fs": "latest",
+    "path": "latest",
+    "jquery": "latest",
+    "jsonwebtoken": "latest",
+    "mongoose": "latest"
+  }
+}

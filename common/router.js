@@ -7,4 +7,7 @@ login.provide(router);
 var login = require("../controller/login");
 login.provide(router);
 
+var login = require("../controller/verifySK");
+login.provide(router);
+
 module.exports = router;

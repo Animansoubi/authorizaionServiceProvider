@@ -1,5 +1,4 @@
 var response = require('../common/const');
-var mongoose = require('mongoose');
 var serviceModel = require('../model/serviceModel');
 
 var client = null;

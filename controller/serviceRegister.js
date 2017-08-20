@@ -16,36 +16,37 @@ function mainHandler(req, res) {
     client = res;
     console.log(req.body.serviceName);
     console.log(req.body.serviceUrl);
-    newService = serviceModel({serviceName: req.body.serviceName, serviceUrl: req.body.serviceUrl});
-    console.log(newService);
-    var query = {serviceName: newService.serviceName};
-    serviceModel.findOne(query, findServiceNameCallBack);
+    if (req.body.serviceName == undefined || req.body.serviceUrl == undefined) {
+        client.send(response.BAD_BODY_ERROR);
+    } else {
+        newService = serviceModel({serviceName: req.body.serviceName, serviceUrl: req.body.serviceUrl});
+        console.log(newService);
+        var query = {serviceName: newService.serviceName};
+        serviceModel.findOne(query, findServiceNameCallBack);
+    }
 }
 
-function findServiceNameCallBack(err, serviceName) {
+function findServiceNameCallBack(err, service) {
     if (err) {
         console.log(err);
+        client.send(response.DB_ERROR);
     } else {
-        if (serviceName == null) {
+        if (service == null) {
             saveNewService();
-
-            // console.log(serviceModel.serviceKey);
-
         } else {
             client.send(response.SERVICE_ALREADY_EXIST);
         }
     }
 }
 
-
 function saveNewService() {
-    newService.save(function (err) {
+    newService.save(function (err , doc) {
             if (err) {
                 console.log(err);
+                client.send(response.DB_ERROR);
             } else {
-                serviceModel.serviceKey = newService._id;
                 var returnResponse = response.SUCCESS_INSERT;
-                returnResponse.serviceKey = serviceModel.serviceKey;
+                returnResponse.serviceKey = doc._id;
                 client.send(response.SUCCESS_INSERT);
             }
         }

@@ -1,0 +1,44 @@
+doctype html
+html
+    head
+        title Jade Page
+        script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"
+        script.
+            function register() {
+                var serviceName = document.getElementById("inputServiceName").value;
+                var serviceUrl = document.getElementById("inputServiceUrl").value;
+                if (serviceName.length == 0) {
+                    window.alert("please enter Service Name");
+                    if (serviceUrl.length == 0) {
+                        window.alert("please enter Service Url");
+                    }else{
+                        // Call register web service
+                        callRegisterWebService(serviceName, serviceUrl);
+                    }
+                }
+            }
+
+            function callRegisterWebService(servicename , serviceurl) {
+                $.post("http://localhost:3001/api-v.1/service/register",
+                    {
+                        "serviceName": servicename, "serviceUrl": serviceurl
+                    },
+                    function (data, status) {
+                        window.alert("Data: " + data + "\nStatus: " + status);
+                        if (data.code == 0) {
+                            write(response)
+                        }
+                    });
+            }
+
+    body
+        h1 Registration Form
+        p Please fill out this fields
+        form(action='/service/register',method='post')
+            input(id='serviceName',value='')
+            br
+            br
+            input(id='serviceUrl',value='')
+            br
+            br
+            input(type="button",id='registerService',value='Register Service', onclick="onStartButtonClicked()")

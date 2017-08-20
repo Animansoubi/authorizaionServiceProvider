@@ -1,5 +1,4 @@
 var response = require('../common/const');
-var mongoose = require('mongoose');
 var serviceModel = require('../model/serviceModel');
 var config = require('../common/config');
 
@@ -18,14 +17,7 @@ function provide(router) {
 
 function mainHandler(req, res) {
     client = res;
-
-
-    // var tokenifyService = {
-    //     serviceKey: serviceModel.serviceKey
-    // };
-    // var token = jwt.sign(tokenifyService, config.secret, {
-    //     expiresIn: '432000000m'
-    // });
+    body = req;
 }
 
 exports.provide = provide;

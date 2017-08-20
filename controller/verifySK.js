@@ -34,6 +34,8 @@ function findServiceKeyCallBack(err, doc) {
         token = jwt.sign(doc._id, config.secret, {
             expiresIn: '432000000m'
         });
+        serviceModel.token = token;
+        console.log(serviceModel.token);
         client.send(token);
     }
 

@@ -1,0 +1,13 @@
+doctype html
+html
+    head
+        title Jade Page
+    body
+        h1 Login with  Telegram Home Page
+        p You can register your service.
+        p Click on Button and Start :)
+        input(type="button",id='startRegistration',value='registration', onclick="onClickRegistrationButton()")
+        script.
+            function onClickRegistrationButton() {
+                window.location.href = '/registerForm'
+            }

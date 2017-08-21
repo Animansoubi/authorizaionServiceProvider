@@ -1,10 +1,12 @@
 var router = require('./common/router');
 var config = require('./common/const');
 
+var path = require('path');
 var express = require('express');
 var app = express();
 
 //set view engine
+app.set('views', path.join(__dirname, 'views'));
 app.set("view engine", "jade");
 
 var bodyParser = require('body-parser');
@@ -19,7 +21,7 @@ app.use(express.static('public'));
 
 app.get('/', function (req, res) {
 
-    res.render('registerForm');
+    res.render('home');
 
 });
 

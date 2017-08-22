@@ -38,8 +38,6 @@ function findServiceKeyCallBack(err, doc) {
         console.log(serviceModel.token);
         client.send(token);
     }
-
-
 }
 
 exports.provide = provide;

@@ -1,14 +1,18 @@
 doctype html
 html
     head
-      title homePage
+        title homePage
     body
         h1 Login with  Telegram Home Page
         p You can register your service.
         p Click on Button and Start :)
-        input(type="button",id='startRegistration',value='registration',onclick = 'onClickRegisterBtn()')
-     script.
+        input(type="button",id='startRegistration',value='Register service')
+    script.
+        document.getElementById("startRegistration").addEventListener("click", onClickRegisterBtn);
+
         function onClickRegisterBtn() {
-          window.location.href = '/registerForm'
+         window.location.href = "/register";
 
         }
+
+

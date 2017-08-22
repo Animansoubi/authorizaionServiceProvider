@@ -6,6 +6,7 @@ var jwt = require('jsonwebtoken');
 
 var client = null;
 var body = null;
+var token = null;
 
 function provide(router) {
     try {
@@ -18,6 +19,18 @@ function provide(router) {
 function mainHandler(req, res) {
     client = res;
     body = req;
+    token = body.headers["token"];
+    var query = {token :token};
+    console.log(query);
+   serviceModel.findOne(query,findCollectionCallBack);
+}
+function findCollectionCallBack(err,collection) {
+    if(err){
+        console.log(err);
+    }else{
+        console.log(collection);
+        client.send(collection)
+    }
 }
 
 exports.provide = provide;

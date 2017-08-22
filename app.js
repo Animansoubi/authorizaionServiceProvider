@@ -22,7 +22,9 @@ app.use(express.static('public'));
 app.get('/', function (req, res) {
 
     res.render('home');
-
+});
+app.get('/register', function(req, res){
+    res.render('registerForm', { title: 'about' });
 });
 
 var port = process.env.PORT || 3001;

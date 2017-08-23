@@ -17,7 +17,7 @@ var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost:27017/authorizationServiceProvider', {useMongoClient: true});
 
 app.use(config.MAIN_API_URL, router);
-app.use(express.static('public'));
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', function (req, res) {
 

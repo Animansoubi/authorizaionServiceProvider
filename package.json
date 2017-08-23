@@ -2,17 +2,17 @@
   "name": "authorizationserviceprovider",
   "version": "0.0.0",
   "dependencies": {
-    "body-parser": "latest",
-    "cookie-parser": "latest",
-    "express": "latest",
-    "jade": "latest",
-    "stylus": "latest",
-    "nib": "latest",
-    "morgan": "latest",
-    "fs": "latest",
-    "path": "latest",
-    "jquery": "latest",
-    "jsonwebtoken": "latest",
-    "mongoose": "latest"
+    "body-parser": "^1.17.2",
+    "cookie-parser": "^1.4.3",
+    "express": "^4.15.4",
+    "fs": "0.0.1-security",
+    "jade": "^1.11.0",
+    "jquery": "^3.2.1",
+    "jsonwebtoken": "^7.4.3",
+    "mongoose": "^4.11.7",
+    "morgan": "^1.8.2",
+    "nib": "^1.1.2",
+    "path": "^0.12.7",
+    "stylus": "^0.54.5"
   }
 }

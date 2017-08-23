@@ -2,43 +2,45 @@ doctype html
 html
     head
         title registrationService
-        script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"
-        script.
-            function register() {
-                var serviceName = document.getElementById("inputServiceName").value;
-                var serviceUrl = document.getElementById("inputServiceUrl").value;
-                if (serviceName.length == 0) {
-                    window.alert("please enter Service Name");
-                    if (serviceUrl.length == 0) {
-                        window.alert("please enter Service Url");
-                    }else{
-                        // Call register web service
-                        callRegisterWebService(serviceName, serviceUrl);
-                    }
-                }
-            }
-
-            function callRegisterWebService(servicename , serviceurl) {
-                $.post("http://localhost:3001/api-v.1/service/register",
-                    {
-                        "serviceName": servicename, "serviceUrl": serviceurl
-                    },
-                    function (data, status) {
-                        window.alert("Data: " + data + "\nStatus: " + status);
-                        if (data.code == 0) {
-                            write(response)
-                        }
-                    });
-            }
-
     body
         h1 Registration Form
         p Please fill out this fields
-        form(action='/service/register',method='post')
+        form
             input(id='serviceName',value='')
             br
             br
             input(id='serviceUrl',value='')
             br
             br
-            input(type="button",id='registerService',value='Register Service', onclick="onStartButtonClicked()")
+            input(type="button",id='registerService',value='Register Service')
+    script(type='text/javascript' src='public/vendor/jquery/jquery.min.js')
+    script.
+        document.getElementById("registerService").addEventListener("click", register);
+
+        function register() {
+            console.log('1');
+            var serviceName = document.getElementById("serviceName").value;
+            console.log(serviceName);
+            var serviceUrl = document.getElementById("serviceUrl").value;
+            console.log(serviceUrl);
+            if (serviceName.length == 0 && serviceUrl.length == 0) {
+                alert("please enter Service Name and service url");
+            } else {
+                // Call register web service
+                callRegisterWebService(serviceName, serviceUrl);
+            }
+        }
+
+        function callRegisterWebService(servicename, serviceurl) {
+            alert("you call register web service now");
+            $.post("http://localhost:3001/api-v.1/service/register",
+                {
+                    "serviceName": servicename, "serviceUrl": serviceurl
+                },
+                function (data, status) {
+                    window.alert("Data: " + data + "\nStatus: " + status);
+                    if (data.code == 0) {
+                        write(response);
+                    }
+                });
+        }

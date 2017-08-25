@@ -30,7 +30,7 @@ app.get('/login', function(req, res){
     res.render('serviceLogin');
 });
 app.get("/complete/:serviceKey" , function (req, res) {
-    console.log("YEP" + req.params["serviceKey"]);
+    console.log(req.params["serviceKey"]);
     res.render('complete', { serviceKey: req.params["serviceKey"] })
 });
 

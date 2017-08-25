@@ -2,7 +2,7 @@ exports.GENERAL_ERROR = {code: -110, message: 'خطا در انجام عملیا
 
 exports.DB_ERROR = {code: -400, message: 'خطای بانک اطلاعاتی'};
 
-exports.SUCCESS = {code: 0, message: 'عملیات با موفقیت انجام شد'};
+exports.SUCCESS_TOKEN = {code: 0, message:'عملیات با موفقیت انجام شد', url: ""};
 
 exports.SUCCESS_INSERT = {code: 0, message: 'عملیات با موفقیت انجام شد', serviceKey: ""};
 

@@ -1,16 +1,16 @@
-var response = require('../common/const');
 var serviceModel = require('../model/serviceModel');
 var config = require('../common/config');
+var response =require('../common/const');
 
 var jwt = require('jsonwebtoken');
 
 var client = null;
-var body = null;
+var serviceKey = null;
 var token = null;
 
 function provide(router) {
     try {
-        router.get('/login', mainHandler);
+        router.get('/login/:serviceKey', mainHandler);
     } catch (e) {
         console.log(e);
     }
@@ -18,18 +18,27 @@ function provide(router) {
 
 function mainHandler(req, res) {
     client = res;
-    body = req;
-    token = body.headers["token"];
-    var query = {token :token};
+    serviceKey = req.params["serviceKey"];
+    console.log(serviceKey);
+    var query = {_id: serviceKey};
     console.log(query);
-   serviceModel.findOne(query,findCollectionCallBack);
+    serviceModel.findOne(query, findServiceKeyCallBack);
 }
-function findCollectionCallBack(err,collection) {
-    if(err){
+
+function findServiceKeyCallBack(err, doc) {
+    if (err) {
         console.log(err);
-    }else{
-        console.log(collection);
-        client.send(collection)
+    }
+    else {
+        console.log(doc);
+        token = jwt.sign(doc._id, config.secret, {
+            expiresIn: '432000000m'
+        });
+        serviceModel.token = token;
+        var url ="https://telegram.me/authspbot?start="+token;
+        var returnResponse = response.SUCCESS_TOKEN;
+        returnResponse.url = url;
+        client.send(returnResponse);
     }
 }
 

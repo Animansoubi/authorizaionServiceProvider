@@ -13,17 +13,15 @@ html
             br
             br
             input(type="button",id='registerService',value='Register Service')
-    script(type='text/javascript' src='public/vendor/jquery/jquery.min.js')
+
+    script(type='text/javascript' src='http://code.jquery.com/jquery.min.js')
     script.
         document.getElementById("registerService").addEventListener("click", register);
 
         function register() {
-            console.log('1');
             var serviceName = document.getElementById("serviceName").value;
-            console.log(serviceName);
             var serviceUrl = document.getElementById("serviceUrl").value;
-            console.log(serviceUrl);
-            if (serviceName.length == 0 && serviceUrl.length == 0) {
+            if (serviceName.length == 0 || serviceUrl.length == 0) {
                 alert("please enter Service Name and service url");
             } else {
                 // Call register web service
@@ -31,16 +29,15 @@ html
             }
         }
 
-        function callRegisterWebService(servicename, serviceurl) {
-            alert("you call register web service now");
-            $.post("http://localhost:3001/api-v.1/service/register",
+        function callRegisterWebService(serviceName, serviceUrl) {
+            $.post("http://127.0.0.1:3001/api-v.1/service/register",
                 {
-                    "serviceName": servicename, "serviceUrl": serviceurl
-                },
-                function (data, status) {
-                    window.alert("Data: " + data + "\nStatus: " + status);
+                    "serviceName": serviceName, "serviceUrl": serviceUrl
+                }, function (data) {
+                    console.log("YEP")
                     if (data.code == 0) {
-                        write(response);
+                        console.log(data)
+                        window.location.href = "/complete/" + data.serviceKey;
                     }
                 });
         }

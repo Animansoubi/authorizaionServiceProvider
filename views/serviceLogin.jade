@@ -2,15 +2,21 @@ doctype html
 html
     head
         title loginWithTelegram
-
     body
         h1 Login with  Telegram
         p You can login with telegram.
         p Click on Button and Start :)
-        input(type="button",id='login',value='login with telegram',onclick='login()')
-
+        input(type="button",id='login',value='login with telegram')
+    script(type='text/javascript' src='http://code.jquery.com/jquery.min.js')
     script.
-        function login() {
+        document.getElementById('login').addEventListener('click', login);
+        function login(serviceKey) {
             //call login api send serviceKey and receive token
             //send token and then redirect to bot
+            alert('ok');
+            var servicekey = "1254"
+            xmlHttp.setRequestHeader('key', servicekey);
+            $.get("http://localhost:3001/api-v.1/verifySk", {}, function () {
+
+            })
         }

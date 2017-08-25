@@ -24,7 +24,14 @@ app.get('/', function (req, res) {
     res.render('home');
 });
 app.get('/register', function(req, res){
-    res.render('registerForm', { title: 'about' });
+    res.render('registerForm');
+});
+app.get('/login', function(req, res){
+    res.render('serviceLogin');
+});
+app.get("/complete/:serviceKey" , function (req, res) {
+    console.log("YEP" + req.params["serviceKey"]);
+    res.render('complete', { serviceKey: req.params["serviceKey"] })
 });
 
 var port = process.env.PORT || 3001;

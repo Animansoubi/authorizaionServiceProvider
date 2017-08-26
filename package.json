@@ -9,10 +9,13 @@
     "jade": "^1.11.0",
     "jquery": "^3.2.1",
     "jsonwebtoken": "^7.4.3",
-    "mongoose": "^4.11.7",
+    "mongoose": "^4.11.8",
     "morgan": "^1.8.2",
     "nib": "^1.1.2",
     "path": "^0.12.7",
-    "stylus": "^0.54.5"
+    "randomstring": "^1.1.5",
+    "stylus": "^0.54.5",
+    "telegraf": "^3.10.1",
+    "vow-telegram-bot": "^0.1.1"
   }
 }

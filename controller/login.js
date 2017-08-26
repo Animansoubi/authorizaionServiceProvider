@@ -1,8 +1,6 @@
 var serviceModel = require('../model/serviceModel');
-var config = require('../common/config');
-var response =require('../common/const');
-
-var jwt = require('jsonwebtoken');
+var response = require('../common/const');
+var randomString = require('randomstring');
 
 var client = null;
 var serviceKey = null;
@@ -19,10 +17,7 @@ function provide(router) {
 function mainHandler(req, res) {
     client = res;
     serviceKey = req.params["serviceKey"];
-    console.log(serviceKey);
-    var query = {_id: serviceKey};
-    console.log(query);
-    serviceModel.findOne(query, findServiceKeyCallBack);
+    serviceModel.findOne({_id: serviceKey}, findServiceKeyCallBack);
 }
 
 function findServiceKeyCallBack(err, doc) {
@@ -31,11 +26,14 @@ function findServiceKeyCallBack(err, doc) {
     }
     else {
         console.log(doc);
-        token = jwt.sign(doc._id, config.secret, {
-            expiresIn: '432000000m'
+        token = randomString.generate({
+            length: 12,
+            charset: 'alphabetic'
         });
+
+        serviceModel.serviceKey = serviceKey;
         serviceModel.token = token;
-        var url ="https://telegram.me/authspbot?start="+token;
+        var url = "https://telegram.me/authspbot?start=" + token;
         var returnResponse = response.SUCCESS_TOKEN;
         returnResponse.url = url;
         client.send(returnResponse);

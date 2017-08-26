@@ -3,7 +3,9 @@ var schema = mongoose.Schema;
 
 serviceSchema = new schema({
     serviceName: String,
-    serviceUrl: String
+    serviceUrl: String,
+    serviceKey:String,
+    token:String
 });
 
 var service = mongoose.model('services', serviceSchema);

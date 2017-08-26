@@ -45,9 +45,9 @@ function saveNewService() {
                 console.log(err);
                 client.send(response.DB_ERROR);
             } else {
-                var returnResponse = response.SUCCESS_INSERT;
+                var returnResponse = response.SUCCESS_SERVICEKEY;
                 returnResponse.serviceKey = doc._id;
-                client.send(response.SUCCESS_INSERT);
+                client.send(response.SUCCESS_SERVICEKEY);
             }
         }
     );

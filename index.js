@@ -44,8 +44,8 @@ app.command('start', (ctx) => {
 });
 
 app.hears('y', ({reply}) => {
-
-    serviceModel.find({token:token}, function (err, doc) {
+    console.log(serviceModel);
+    serviceModel.findOne({token:token}, function (err, doc) {
         if (err) {
             console.log(err);
         } else {
@@ -66,7 +66,7 @@ app.hears('y', ({reply}) => {
             });
         }
     });
-    return reply('click to this link for login\n');
+    return reply('click to this link for login\n'+);
 });
 
 app.hears('n', ({reply}) => {

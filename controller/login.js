@@ -30,13 +30,19 @@ function findServiceKeyCallBack(err, doc) {
             length: 12,
             charset: 'alphabetic'
         });
-
         serviceModel.serviceKey = serviceKey;
         serviceModel.token = token;
-        var url = "https://telegram.me/authspbot?start=" + token;
-        var returnResponse = response.SUCCESS_TOKEN;
-        returnResponse.url = url;
-        client.send(returnResponse);
+        serviceModel.update({_id: serviceKey}, {$set: {token: token}}, function (err) {
+            if (err) {
+                console.log(err);
+            } else {
+                var url = "https://telegram.me/authspbot?start=" + token;
+                var returnResponse = response.SUCCESS_TOKEN;
+                returnResponse.url = url;
+                client.send(returnResponse);
+            }
+        });
+
     }
 }
 

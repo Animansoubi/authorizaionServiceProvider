@@ -34,9 +34,9 @@ html
                 {
                     "serviceName": serviceName, "serviceUrl": serviceUrl
                 }, function (data) {
-                    console.log("YEP")
+                console.log("yes");
                     if (data.code == 0) {
-                        console.log(data)
+                        console.log(data);
                         window.location.href = "/complete/" + data.serviceKey;
                     }
                 });

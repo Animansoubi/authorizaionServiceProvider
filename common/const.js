@@ -4,7 +4,7 @@ exports.DB_ERROR = {code: -400, message: 'خطای بانک اطلاعاتی'};
 
 exports.SUCCESS_TOKEN = {code: 0, message:'عملیات با موفقیت انجام شد', url: ""};
 
-exports.SUCCESS_INSERT = {code: 0, message: 'عملیات با موفقیت انجام شد', serviceKey: ""};
+exports.SUCCESS_SERVICEKEY = {code: 0, message: 'عملیات با موفقیت انجام شد', serviceKey: ""};
 
 exports.BAD_BODY_ERROR = {code: -200, message: 'مقادیر ارسالی صحیح نمی باشد'};
 

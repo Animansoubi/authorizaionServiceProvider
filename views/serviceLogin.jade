@@ -27,7 +27,7 @@ html
         function callLoginWebService(servicekey) {
             $.get("http://127.0.0.1:3001/api-v.1/login/" + servicekey, function (data) {
                 if (data.code == 0) {
-                    console.log(data)
+                    console.log(data);
                     window.location.href = data.url;
                 }
             });

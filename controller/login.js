@@ -30,8 +30,7 @@ function findServiceKeyCallBack(err, doc) {
             length: 12,
             charset: 'alphabetic'
         });
-        serviceModel.serviceKey = serviceKey;
-        serviceModel.token = token;
+
         serviceModel.update({_id: serviceKey}, {$set: {token: token}}, function (err) {
             if (err) {
                 console.log(err);

@@ -8,11 +8,15 @@ var config = require('./common/configBotTooken');
 const Telegraf = require('telegraf');
 const app = new Telegraf(config.BOT_TOKEN);
 
+var randomString = require('randomstring');
+
 var firstName = null;
 var lastName = null;
 var userName = null;
-var token = null;
+var serviceToken = null;
 var profileImgUrl = null;
+
+var serviceUrl = null;
 
 app.command('start', (ctx) => {
 
@@ -22,8 +26,8 @@ app.command('start', (ctx) => {
     logger("lastName", lastName);
     userName = ctx.from.username;
     logger("userName", userName);
-    token = ctx.message.text.split(' ')[1];
-    logger("token", token);
+    serviceToken = ctx.message.text.split(' ')[1];
+    logger("token", serviceToken);
 
     app.telegram.getUserProfilePhotos(ctx.from.id, 0, 10)
     //fulfill
@@ -44,12 +48,12 @@ app.command('start', (ctx) => {
 });
 
 app.hears('y', ({reply}) => {
-    console.log(serviceModel);
-    serviceModel.findOne({token:token}, function (err, doc) {
+    serviceModel.findOne({token: serviceToken}, function (err, doc) {
         if (err) {
             console.log(err);
         } else {
             console.log(doc);
+            serviceUrl = doc.serviceUrl;
             var newUser = userModel({
                 firstName: firstName,
                 lastName: lastName,
@@ -62,11 +66,15 @@ app.hears('y', ({reply}) => {
                 }
                 else {
                     console.log(doc);
+                    var userToken = randomString.generate({
+                        length: 12,
+                        charset: 'alphabetic'
+                    });
+                    return reply('click to this link for login\n' + serviceUrl +"/"+ userToken);
                 }
             });
         }
     });
-    return reply('click to this link for login\n'+);
 });
 
 app.hears('n', ({reply}) => {

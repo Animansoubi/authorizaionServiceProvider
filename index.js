@@ -10,75 +10,83 @@ const app = new Telegraf(config.BOT_TOKEN);
 
 var randomString = require('randomstring');
 
-var firstName = null;
-var lastName = null;
-var userName = null;
-var serviceToken = null;
-var profileImgUrl = null;
-
-var serviceUrl = null;
-
 app.command('start', (ctx) => {
-
-    firstName = ctx.from.first_name;
-    logger("firstName", firstName);
-    lastName = ctx.from.last_name;
-    logger("lastName", lastName);
-    userName = ctx.from.username;
-    logger("userName", userName);
-    serviceToken = ctx.message.text.split(' ')[1];
-    logger("token", serviceToken);
-
     app.telegram.getUserProfilePhotos(ctx.from.id, 0, 10)
-    //fulfill
         .then(function (data) {
             var file_id = data.photos[0][2].file_id;
-            logger("FileId", file_id);
             app.telegram.getFileLink(file_id).then(function (url) {
-                profileImgUrl = url;
-                logger("Image", profileImgUrl);
+                var profileImgUrl = url;
+                var firstName = ctx.from.first_name;
+                var lastName = ctx.from.last_name;
+                var userName = ctx.from.username;
+                var serviceToken = ctx.message.text.split(" ")[1];
+                // Check user existence
+
+                userModel.findOne({userName: userName}, function (err, doc) {
+                    if (err) {
+                        ctx.reply("Data base error , please try again later!")
+                    } else if (doc != null) {
+                        sendResponseToUser(ctx, firstName, lastName);
+                    } else {
+                        var newUser = userModel({
+                            firstName: firstName,
+                            lastName: lastName,
+                            userName: userName,
+                            avatar: profileImgUrl,
+                            userToken: generateRandomToken(),
+                            serviceId: serviceToken
+                        });
+                        newUser.save(function (err) {
+                            if (err) {
+                                ctx.reply("Data base error , please try again later!")
+                            } else {
+                                sendResponseToUser(ctx, firstName, lastName);
+                            }
+                        });
+                    }
+                });
             });
-            //reject
         }, function (data) {
             console.log(data)
         });
-
-
-    ctx.reply("Welcome " + firstName + lastName + "\n do you want share your info for login with telegram?\n if yes type y else type n");
 });
 
-app.hears('y', ({reply}) => {
-    serviceModel.findOne({token: serviceToken}, function (err, doc) {
+function generateRandomToken() {
+    userToken = randomString.generate({
+        length: 12,
+        charset: 'alphabetic'
+    });
+    return userToken;
+}
+
+function sendResponseToUser(ctx, firstName, lastName) {
+    ctx.reply("Welcome " + firstName + lastName + "\n Do You Want Share Your Info For Login With Telegram?\n If Yes Type y Else Type n");
+}
+
+app.hears('y', ({from, reply}) => {
+    console.log(from);
+    userModel.findOne({userName: from.username}, function (err, userDoc) {
         if (err) {
-            console.log(err);
+            reply("DB Error , please try again later!")
+        } else if (userDoc == null) {
+            reply("User does not exist !!")
         } else {
-            console.log(doc);
-            serviceUrl = doc.serviceUrl;
-            var newUser = userModel({
-                firstName: firstName,
-                lastName: lastName,
-                userName: userName,
-                avatar: profileImgUrl
-            });
-            newUser.save(function (err, doc) {
+            serviceModel.findOne({_id: userDoc.serviceId}, function (err, serviceDoc) {
                 if (err) {
-                    console.log(err);
-                }
-                else {
-                    console.log(doc);
-                    var userToken = randomString.generate({
-                        length: 12,
-                        charset: 'alphabetic'
-                    });
-                    return reply('click to this link for login\n' + serviceUrl +"/"+ userToken);
+                    reply("DB Error , please try again later!")
+                } else if (serviceDoc == null) {
+                    reply("Service provider does not exist!!")
+                } else {
+                    var callBackUrl = serviceDoc.serviceUrl + "/" + userDoc.userToken;
+                    reply("Please click this link to login for your service provider : " + callBackUrl);
                 }
             });
         }
     });
 });
 
-app.hears('n', ({reply}) => {
-    return reply('tanx goodby');
+app.hears('n', ({from, reply}) => {
+    return reply('Tanx Dear' + from.first_name + 'Good By');
 });
 
 app.catch((err) => {
@@ -90,5 +98,4 @@ function logger(tag, log) {
 }
 
 app.startPolling(3, 100);
-
 

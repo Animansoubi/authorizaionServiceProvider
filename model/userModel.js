@@ -6,7 +6,9 @@ userInfoSchema = new schema({
     firstName: String,
     lastName: String,
     userName: String,
-    avatar: String
+    avatar: String,
+    userToken: String,
+    serviceId: String
 });
 
 var userInfo = mongoose.model('users', userInfoSchema);

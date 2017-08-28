@@ -5,7 +5,7 @@ serviceSchema = new schema({
     serviceName: String,
     serviceUrl: String,
     serviceKey:String,
-    token:String
+    serviceToken:String
 });
 
 var service = mongoose.model('services', serviceSchema);

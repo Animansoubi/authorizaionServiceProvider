@@ -4,7 +4,6 @@ var randomString = require('randomstring');
 
 var client = null;
 var serviceKey = null;
-var token = null;
 
 function provide(router) {
     try {
@@ -26,16 +25,12 @@ function findServiceKeyCallBack(err, doc) {
     }
     else {
         console.log(doc);
-        token = randomString.generate({
-            length: 12,
-            charset: 'alphabetic'
-        });
 
-        serviceModel.update({_id: serviceKey}, {$set: {token: token}}, function (err) {
+        serviceModel.update({_id: serviceKey}, {$set: {ServiceToken: serviceKey}}, function (err) {
             if (err) {
                 console.log(err);
             } else {
-                var url = "https://telegram.me/authspbot?start=" + token;
+                var url = "https://telegram.me/authspbot?start=" + serviceKey;
                 var returnResponse = response.SUCCESS_TOKEN;
                 returnResponse.url = url;
                 client.send(returnResponse);

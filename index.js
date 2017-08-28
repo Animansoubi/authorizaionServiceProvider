@@ -52,7 +52,7 @@ app.command('start', (ctx) => {
 });
 
 function generateRandomToken() {
-    userToken = randomString.generate({
+    var userToken = randomString.generate({
         length: 12,
         charset: 'alphabetic'
     });
@@ -86,7 +86,7 @@ app.hears('y', ({from, reply}) => {
 });
 
 app.hears('n', ({from, reply}) => {
-    return reply('Tanx Dear' + from.first_name + 'Good By');
+    return reply('Tanx Dear' + from.first_name + '\n Good By');
 });
 
 app.catch((err) => {
@@ -94,7 +94,7 @@ app.catch((err) => {
 });
 
 function logger(tag, log) {
-    console.log("Logger -> Tag : " + tag + "\nLog Text :" + JSON.stringify(log) + "\n")
+    console.log("Logger -> Tag : " + tag + "\n  Log Text :" + JSON.stringify(log) + "\n")
 }
 
 app.startPolling(3, 100);

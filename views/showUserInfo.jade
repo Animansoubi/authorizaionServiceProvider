@@ -4,10 +4,18 @@ html
         title show user info
     body
         p You login to this site with telegram :)
-    input(type = "lable",id="username" value='userName : #{userName}' size =30 align=right)
+    input(type = "lable",id = "username" value ='userName : #{userName}' size =30 align=right)
     br
     br
-    input(type="label" , id="firstname" value=' firstName : #{firstName}' size=30 align=right)
-
+    input(type="label" , id = "firstname" value ='firstName : #{firstName}' size=30 align=right)
+    br
+    br
+    input(type="label" , id = "lastname" value ='lastName : #{lastName}' size=30 align=right)
+    br
+    br
+    img(src="#{imageUrl}")
+    br
+    br
+    input(type="label" , id="err" value='#{err}' size=30 align=right)
 
 

@@ -8,8 +8,8 @@ var serviceKey = null;
 function provide(router) {
     try {
         router.get('/login/:serviceKey', mainHandler);
-    } catch (e) {
-        console.log(e);
+    } catch (err) {
+        console.log(err);
     }
 }
 

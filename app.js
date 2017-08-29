@@ -3,6 +3,7 @@ var config = require('./common/const');
 var request = require('request');
 var path = require('path');
 var express = require('express');
+var pug = require('pug');
 var app = express();
 
 app.set('views', path.join(__dirname, 'views'));
@@ -35,6 +36,7 @@ app.get('/complete/:serviceKey', function (req, res) {
     res.render('complete', {serviceKey: req.params['serviceKey']})
 });
 
+//simulate service caller
 app.get('/show/:userToken', function (req, res) {
     var userToken = req.params['userToken'];
     request.get("http://127.0.0.1:3001/api-v.1/user/info/" + userToken, function (err, response, body) {

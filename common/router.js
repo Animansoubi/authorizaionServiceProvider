@@ -7,7 +7,7 @@ register.provide(router);
 var login = require("../controller/login");
 login.provide(router);
 
-var userInfo = require("../controller/uaerInfo");
+var userInfo = require("../controller/userInfo");
 userInfo.provide(router);
 
 module.exports = router;

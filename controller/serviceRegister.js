@@ -13,16 +13,20 @@ function provide(router) {
 }
 
 function mainHandler(req, res) {
-    client = res;
-    console.log(req.body.serviceName);
-    console.log(req.body.serviceUrl);
-    if (req.body.serviceName == undefined || req.body.serviceUrl == undefined) {
-        client.send(response.BAD_BODY_ERROR);
-    } else {
-        newService = serviceModel({serviceName: req.body.serviceName, serviceUrl: req.body.serviceUrl});
-        console.log(newService);
-        var query = {serviceName: newService.serviceName};
-        serviceModel.findOne(query, findServiceNameCallBack);
+    try {
+        client = res;
+        console.log(req.body.serviceName);
+        console.log(req.body.serviceUrl);
+        if (req.body.serviceName == undefined || req.body.serviceUrl == undefined) {
+            client.send(response.BAD_BODY_ERROR);
+        } else {
+            newService = serviceModel({serviceName: req.body.serviceName, serviceUrl: req.body.serviceUrl});
+            console.log(newService);
+            var query = {serviceName: newService.serviceName};
+            serviceModel.findOne(query, findServiceNameCallBack);
+        }
+    } catch (err) {
+        console.log(err);
     }
 }
 
@@ -40,7 +44,7 @@ function findServiceNameCallBack(err, service) {
 }
 
 function saveNewService() {
-    newService.save(function (err , doc) {
+    newService.save(function (err, doc) {
             if (err) {
                 console.log(err);
                 client.send(response.DB_ERROR);

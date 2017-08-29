@@ -1,4 +1,5 @@
 var userModel = require('../model/userModel');
+var response = require('../common/const');
 
 function provide(router) {
     try {
@@ -14,14 +15,13 @@ function mainHandler(req, res) {
     if (typeof token !== 'undefined') {
         userModel.findOne({userToken: token}, function (err, doc) {
             if (err) {
-                res.send("Error");
+                res.send(response.DB_ERROR);
             } else if (doc == null) {
-                res.send("Error1");
+                res.send(response.DB_ERROR_EMPTY);
             }
             else {
                 res.send(doc);
             }
-
         });
     }
 }

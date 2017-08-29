@@ -1,6 +1,5 @@
 var serviceModel = require('../model/serviceModel');
 var response = require('../common/const');
-var randomString = require('randomstring');
 
 var client = null;
 var serviceKey = null;
@@ -14,9 +13,13 @@ function provide(router) {
 }
 
 function mainHandler(req, res) {
-    client = res;
-    serviceKey = req.params["serviceKey"];
-    serviceModel.findOne({_id: serviceKey}, findServiceKeyCallBack);
+    try {
+        client = res;
+        serviceKey = req.params["serviceKey"];
+        serviceModel.findOne({_id: serviceKey}, findServiceKeyCallBack);
+    } catch (err) {
+        console.log(err);
+    }
 }
 
 function findServiceKeyCallBack(err, doc) {
@@ -25,18 +28,17 @@ function findServiceKeyCallBack(err, doc) {
     }
     else {
         console.log(doc);
-
-        serviceModel.update({_id: serviceKey}, {$set: {ServiceToken: serviceKey}}, function (err) {
+        serviceModel.update({_id: serviceKey}, {$set: {serviceToken: serviceKey}}, function (err) {
             if (err) {
                 console.log(err);
             } else {
+                console.log(doc);
                 var url = "https://telegram.me/authspbot?start=" + serviceKey;
                 var returnResponse = response.SUCCESS_TOKEN;
                 returnResponse.url = url;
                 client.send(returnResponse);
             }
         });
-
     }
 }
 
